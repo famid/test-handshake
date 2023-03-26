@@ -1,5 +1,5 @@
 @extends('backend.layouts.app')
-@dd($categories)
+
 @section('content')
 <div class="aiz-titlebar text-left mt-2 mb-3">
     <h5 class="mb-0 h6">{{translate('Add New Product')}}</h5>
@@ -25,6 +25,7 @@
                             <label class="col-md-3 col-from-label">{{translate('Category')}} <span class="text-danger">*</span></label>
                             <div class="col-md-8">
                                 <select class="form-control aiz-selectpicker" name="category_id" id="category_id" data-live-search="true" required>
+
                                     @foreach ($categories as $category)
 
                                     <option value="{{ $category->id }}">{{ $category->getTranslation('name') }}</option>
