@@ -1,0 +1,2 @@
+[25-Mar-2023 18:50:18 UTC] PHP Deprecated:  The behavior of unparenthesized expressions containing both '.' and '+'/'-' will change in PHP 8: '+'/'-' will take a higher precedence in /home/handshakebd/public_html/app/Http/Controllers/ProductController.php on line 268
+[25-Mar-2023 18:50:18 UTC] PHP Deprecated:  The behavior of unparenthesized expressions containing both '.' and '+'/'-' will change in PHP 8: '+'/'-' will take a higher precedence in /home/handshakebd/public_html/app/Http/Controllers/ProductController.php on line 529
