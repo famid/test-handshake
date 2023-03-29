@@ -434,8 +434,11 @@ Route::get('/mobile-page/{slug}', 'PageController@mobile_custom_page')->name('mo
 //Custom page
 Route::get('/{slug}', 'PageController@show_custom_page')->name('custom-pages.show_custom_page');
 
-Route::get('/test/daraz', function(\App\Http\Services\DarazApiService  $apiService) {
-    dd($apiService->createProduct());
+Route::get('/test/daraz', function(\App\Http\Services\DarazApiService  $apiService, \App\Http\Controllers\DarazController $darazController) {
+
+//    dd($apiService->getCategoryTree());
+    dd($apiService->getCategoryAttributes(1956));
+//    dd($apiService->createProduct());
 
 //    dd($apiService->getCategoryAttributes());
 //    dd(App::make('url')->to('/'));
