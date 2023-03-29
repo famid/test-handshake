@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Area;
 use App\Models\Cell;
 use App\Models\Shelf;
 use App\Models\Warehouse;
@@ -85,7 +86,7 @@ class CellController extends Controller
      *
      * @return Application|Factory|View
      */
-    public function create()
+    public function create(Request $request)
     {
         CoreComponentRepository::initializeCache();
 
@@ -93,7 +94,17 @@ class CellController extends Controller
             ->where('owner_id', auth()->user()->id)
             ->get();
 
-        return $this->loadView('cell.create', ['warehouses' => $vendorsWarehouses]);
+        $selectedShelf = null;
+        if($request->input('id')) {
+            $selectedShelf = Shelf::with('area')
+                ->where('id', $request->input('id'))
+                ->firstOrFail();
+
+            if( !$vendorsWarehouses->contains('id', $selectedShelf->area->location->warehouse->id) )
+                abort(403);
+        }
+
+        return $this->loadView('cell.create', ['warehouses' => $vendorsWarehouses, 'selectedShelf' => $selectedShelf]);
     }
 
     public function getShelvesByArea(Request $request)

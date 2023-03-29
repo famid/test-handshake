@@ -24,26 +24,17 @@
                         <div class="form-group row" id="category">
                             <label class="col-md-3 col-from-label">{{translate('Category')}} <span class="text-danger">*</span></label>
                             <div class="col-md-8">
-                                <select class="form-control aiz-selectpicker" name="category_id" id="category_id" data-live-search="true" required>
-
-                                    @foreach ($categories as $category)
-
-                                    <option value="{{ $category->id }}">{{ $category->getTranslation('name') }}</option>
-                                    @foreach ($category->childrenCategories as $childCategory)
-                                    @include('categories.child_category', ['child_category' => $childCategory])
-                                    @endforeach
-                                    @endforeach
+                                <select class="form-control aiz-selectpicker categories" name="category_id" id="category_id" data-live-search="true" required>
+                                    @include('backend.product.products.product_categories')
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row" id="brand">
                             <label class="col-md-3 col-from-label">{{translate('Brand')}}</label>
                             <div class="col-md-8">
-                                <select class="form-control aiz-selectpicker" name="brand_id" id="brand_id" data-live-search="true">
+                                <select class="form-control aiz-selectpicker brands" name="brand_id" id="brand_id" data-live-search="true">
                                     <option value="">{{ translate('Select Brand') }}</option>
-                                    @foreach (\App\Models\Brand::all() as $brand)
-                                    <option value="{{ $brand->id }}">{{ $brand->getTranslation('name') }}</option>
-                                    @endforeach
+{{--                                    @include('backend.product.brands.product_brand')--}}
                                 </select>
                             </div>
                         </div>
@@ -760,6 +751,97 @@
         update_sku();
     });
 
+
+    // AJax Live Category Search
+
+    // let timer;
+    // const delay = 1000;
+
+    // function handleAjaxRequest() {
+    //   //Your code here
+    // }
+    // function debounceAjaxRequest(e) {
+    //   clearTimeout(timer);
+    //   timer = setTimeout(handleAjaxRequest(e), delay);
+    // }
+
+    // $(document).on("keyup", ".categories", function (e) {
+    //   debounceAjaxRequest();
+    // });
+
+
+    $(document).on('input', '.categories', function (e) {
+        var searchData = e.target.value;
+
+        if (searchData.length > 2) {
+
+
+            $.ajax({
+                headers:{
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "POST",
+                url: "{{ route('category.search') }}",
+                data: {
+
+                    "search_category" : searchData
+                },
+                async: true,
+                success: function (response) {
+
+                    if (response.result) {
+
+                        $('#category_id').html(response.data);
+                        AIZ.plugins.bootstrapSelect('refresh');
+                    }
+                },
+                error: function (response){
+
+                }
+            });
+        }
+
+
+    });
+
+    $(document).ready(function() {
+        appendBrand();
+    });
+
+    $(document).on('input', '.brands', function (e) {
+        var searchData = e.target.value;
+
+        if (searchData.length > 2) {
+            appendBrand(searchData);
+        }else{
+            appendBrand();
+        }
+    });
+
+    function appendBrand(searchData=null) {
+        $.ajax({
+            type: "GET",
+            delay: 1000,
+            url: "{{ route('admin.brands.get-brands') }}",
+            data: {
+
+                "search_brand_name" : searchData
+            },
+            async: true,
+            success: function (response) {
+
+                if (response.result) {
+
+                    $('#brand_id').html(response.data);
+
+                    AIZ.plugins.bootstrapSelect('refresh');
+                }
+            },
+            error: function (response){
+
+            }
+        });
+    }
 </script>
 
 @endsection

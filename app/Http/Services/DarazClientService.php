@@ -128,8 +128,7 @@ class DarazClientService
         try {
             ksort($apiAllParams);
 
-            $stringToBeSigned = '';
-            $stringToBeSigned .= $apiName;
+            $stringToBeSigned = $apiName;
 
             foreach ($apiAllParams as $key => $value) {
                 $stringToBeSigned .= "$key$value";
@@ -280,6 +279,8 @@ class DarazClientService
      * @return bool|string
      */
     public function getApiData($apiUrl, $data) {
+        $apiUrl .= '&' . http_build_query($data);
+
         $ch = curl_init();
         curl_setopt(
             $ch,

@@ -59,11 +59,13 @@
                         <td>{{ $location->warehouse->name ?? "N/A"}}</td>
 
                         <td>
-                            <a class="btn btn-soft-primary btn-icon btn-circle btn-sm"
-                               href="{{route('area.create', $location->id)}}"
-                               title="{{ translate('Add') }}">
-                                <i class="las la-plus-circle"></i>
-                            </a>
+                            @if($location->warehouse->owner_id == auth()->user()->id)
+                                <a class="btn btn-soft-primary btn-icon btn-circle btn-sm"
+                                   href="{{ route('area.create', ['id' => $location->id]) }}"
+                                   title="{{ translate('Add') }}">
+                                    <i class="las la-plus-circle"></i>
+                                </a>
+                            @endif
                         </td>
 
                         <td class="text-right">

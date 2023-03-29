@@ -34,23 +34,15 @@
                             <label class="col-lg-3 col-from-label">{{translate('Category')}}</label>
                             <div class="col-lg-8">
                                 <select class="form-control aiz-selectpicker" name="category_id" id="category_id" data-selected="{{ $product->category_id }}" data-live-search="true" required>
-                                    @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->getTranslation('name') }}</option>
-                                    @foreach ($category->childrenCategories as $childCategory)
-                                    @include('categories.child_category', ['child_category' => $childCategory])
-                                    @endforeach
-                                    @endforeach
+                                    <option value="{{$product->category_id}}">{{ translate($product->category->name) }}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row" id="brand">
                             <label class="col-lg-3 col-from-label">{{translate('Brand')}}</label>
                             <div class="col-lg-8">
-                                <select class="form-control aiz-selectpicker" name="brand_id" id="brand_id" data-live-search="true">
-                                    <option value="">{{ translate('Select Brand') }}</option>
-                                    @foreach (\App\Models\Brand::all() as $brand)
-                                    <option value="{{ $brand->id }}" @if($product->brand_id == $brand->id) selected @endif>{{ $brand->getTranslation('name') }}</option>
-                                    @endforeach
+                                <select class="form-control aiz-selectpicker brands" name="brand_id" id="brand_id" data-live-search="true">
+                                    <option id="current_product_brand" value="{{$product->brand_id}}">{{ translate($product->brand->name) }}</option>
                                 </select>
                             </div>
                         </div>
@@ -72,7 +64,7 @@
                                 <input type="text" class="form-control aiz-tag-input" name="tags[]" id="tags" value="{{ $product->tags }}" placeholder="{{ translate('Type to add a tag') }}" data-role="tagsinput">
                             </div>
                         </div>
-                        
+
                         @if (addon_is_activated('pos_system'))
                         <div class="form-group row">
                             <label class="col-lg-3 col-from-label">{{translate('Barcode')}}</label>
@@ -868,6 +860,51 @@
 
         update_sku();
     });
+
+
+    $(document).ready(function() {
+        let selectedBrandId = $("#current_product_brand").val();
+
+        appendBrand(selectedBrandId);
+    });
+
+    $(document).on('input', '.brands', function (e) {
+        let searchBrandName = e.target.value;
+        let selectedBrandId = '{{ $product->brand_id ?? null }}';
+
+        if (searchBrandName.length > 2) {
+            appendBrand(selectedBrandId, searchBrandName);
+        }else{
+            appendBrand(selectedBrandId);
+        }
+    });
+
+    function appendBrand(selectedBrandId =null, searchData=null) {
+        console.log(selectedBrandId, searchData)
+        $.ajax({
+            type: "GET",
+            delay: 1000,
+            url: "{{ route('admin.brands.get-brands') }}",
+            data: {
+
+                "search_brand_name" : searchData,
+                "current_product_brand_id": selectedBrandId,
+            },
+            async: true,
+            success: function (response) {
+
+                if (response.result) {
+                    console.log(response.data);
+                    $('#brand_id').html(response.data);
+
+                    AIZ.plugins.bootstrapSelect('refresh');
+                }
+            },
+            error: function (response){
+
+            }
+        });
+    }
 
 </script>
 

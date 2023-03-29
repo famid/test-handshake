@@ -132,9 +132,9 @@ class ProductController extends Controller
     {
         CoreComponentRepository::initializeCache();
 
-        $categories = Category::where('parent_id', 0)
-            ->where('digital', 0)
+        $categories = Category::where('digital', 0)
             ->with('childrenCategories')
+            ->take(10)
             ->get();
 
         return view('backend.product.products.create', compact('categories'));

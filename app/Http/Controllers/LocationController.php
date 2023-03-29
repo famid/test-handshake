@@ -90,7 +90,12 @@ class LocationController extends Controller
             ->where('owner_id', auth()->user()->id)
             ->get();
 
-        return $this->loadView('location.create', ['warehouses' => $vendorsWarehouses]);
+        if($request->input('id')) {
+            if( !$vendorsWarehouses->contains('id', $request->input('id')) )
+                abort(403);
+        }
+
+        return $this->loadView('location.create', ['warehouses' => $vendorsWarehouses, 'selectedWarehouse' => $request->input('id')]);
     }
 
     /**

@@ -51,7 +51,7 @@
 
                         <td>
                             <a class="btn btn-soft-primary btn-icon btn-circle btn-sm"
-                               href="{{route('seller.area.create', $location->id)}}"
+                               href="{{ route('seller.area.create', ['id' => $location->id]) }}"
                                title="{{ translate('Add') }}">
                                 <i class="las la-plus-circle"></i>
                             </a>

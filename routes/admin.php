@@ -28,6 +28,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(
     Route::get('/brands/edit/{id}', 'BrandController@edit')->name('brands.edit');
     Route::get('/brands/destroy/{id}', 'BrandController@destroy')->name('brands.destroy');
 
+    Route::get('/brands/', 'HomeController@productBrandsSearch')->name('admin.brands.get-brands');
+
     Route::get('/warehouse/create', 'WarehouseController@create')->name('warehouse.create');
     Route::resource('location', 'LocationController');
     Route::resource('area', 'AreaController');

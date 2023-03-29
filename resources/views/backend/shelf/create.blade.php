@@ -32,10 +32,15 @@
                         <div class="form-group row">
                             <label class="col-md-3 col-from-label">{{translate('Select Warehouse')}} <span class="text-danger">*</span></label>
                             <div class="col-md-8">
-                                <select class="form-control aiz-selectpicker" name="warehouse_id" placeholder="Select Warehouse" data-live-search="true" required>
-                                    @foreach ($warehouses as $key => $warehouse)
-                                        <option value="{{ $warehouse->id  }}"> {{ $warehouse->name . ' (' . $warehouse->code . ')' }} </option>
-                                    @endforeach
+                                <select class="form-control aiz-selectpicker" name="warehouse_id" placeholder="Select Warehouse" data-live-search="true" {{ isset($selectedArea) ? "disabled" : "" }} required>
+                                    @if( isset($selectedArea) )
+                                        <option value="{{ $selectedArea->location->warehouse->id  }}" selected > {{ $selectedArea->location->warehouse->name . ' (' . $selectedArea->location->warehouse->code . ')' }} </option>
+                                    @else
+                                        <option value=""> Nothing Selected </option>
+                                        @foreach ($warehouses as $key => $warehouse)
+                                            <option value="{{ $warehouse->id  }}"> {{ $warehouse->name . ' (' . $warehouse->code . ')' }} </option>
+                                        @endforeach
+                                    @endif
                                 </select>
                             </div>
                         </div>
@@ -43,7 +48,10 @@
                         <div class="form-group row">
                             <label class="col-md-3 col-from-label">{{translate('Select Location')}} <span class="text-danger">*</span></label>
                             <div class="col-md-8">
-                                <select class="form-control aiz-selectpicker" name="location_id" placeholder="Select Location" data-live-search="true" required>
+                                <select class="form-control aiz-selectpicker" name="location_id" placeholder="Select Location" data-live-search="true" {{ isset($selectedArea) ? "disabled" : "" }} required>
+                                    @isset($selectedArea)
+                                        <option value="{{ $selectedArea->location->id  }}" selected > {{ $selectedArea->location->name . ' (' . $selectedArea->location->code . ')' }} </option>
+                                    @endisset
                                 </select>
                             </div>
                         </div>
@@ -51,7 +59,10 @@
                         <div class="form-group row">
                             <label class="col-md-3 col-from-label">{{translate('Select Area')}} <span class="text-danger">*</span></label>
                             <div class="col-md-8">
-                                <select class="form-control aiz-selectpicker" name="area_id" placeholder="Select Area" data-live-search="true" required>
+                                <select class="form-control aiz-selectpicker" name="area_id" placeholder="Select Area" data-live-search="true" {{ isset($selectedArea) ? "disabled" : "" }} required>
+                                    @isset($selectedArea)
+                                        <option value="{{ $selectedArea->id  }}" selected > {{ $selectedArea->name . ' (' . $selectedArea->code . ')' }} </option>
+                                    @endisset
                                 </select>
                             </div>
                         </div>

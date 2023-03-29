@@ -32,10 +32,15 @@
                             <div class="form-group row">
                                 <label class="col-md-3 col-from-label">{{translate('Select Warehouse')}} <span class="text-danger">*</span></label>
                                 <div class="col-md-8">
-                                    <select class="form-control aiz-selectpicker" name="warehouse_id" placeholder="Select Warehouse" data-live-search="true" required>
-                                        @foreach ($warehouses as $key => $warehouse)
-                                            <option value="{{ $warehouse->id  }}"> {{ $warehouse->name . ' (' . $warehouse->code . ')' }} </option>
-                                        @endforeach
+                                    <select class="form-control aiz-selectpicker" name="warehouse_id" placeholder="Select Warehouse" data-live-search="true" {{ isset($selectedLocation) ? "disabled" : "" }} required>
+                                        @if( isset($selectedLocation) )
+                                            <option value="{{ $selectedLocation->warehouse->id  }}" selected > {{ $selectedLocation->warehouse->name . ' (' . $selectedLocation->warehouse->code . ')' }} </option>
+                                        @else
+                                            <option value=""> Nothing Selected </option>
+                                            @foreach ($warehouses as $key => $warehouse)
+                                                <option value="{{ $warehouse->id  }}"> {{ $warehouse->name . ' (' . $warehouse->code . ')' }} </option>
+                                            @endforeach
+                                        @endif
                                     </select>
                                 </div>
                             </div>
@@ -43,7 +48,10 @@
                             <div class="form-group row">
                                 <label class="col-md-3 col-from-label">{{translate('Select Location')}} <span class="text-danger">*</span></label>
                                 <div class="col-md-8">
-                                    <select class="form-control aiz-selectpicker" name="location_id" placeholder="Select Location" data-live-search="true" required>
+                                    <select class="form-control aiz-selectpicker" name="location_id" placeholder="Select Location" data-live-search="true" {{ isset($selectedLocation) ? "disabled" : "" }} required>
+                                        @isset($selectedLocation)
+                                            <option value="{{ $selectedLocation->id  }}" selected > {{ $selectedLocation->name . ' (' . $selectedLocation->code . ')' }} </option>
+                                        @endisset
                                     </select>
                                 </div>
                             </div>
@@ -73,7 +81,7 @@
 
         $(document).ready(function() {
             @if(\Session::has('error'))
-            AIZ.plugins.notify('danger', "{{\Session::get('error')}}" );
+                AIZ.plugins.notify('danger', "{{\Session::get('error')}}" );
             @endif
         })
 

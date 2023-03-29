@@ -32,10 +32,15 @@
                         <div class="form-group row">
                             <label class="col-md-3 col-from-label">{{translate('Select Warehouse')}} <span class="text-danger">*</span></label>
                             <div class="col-md-8">
-                                <select class="form-control aiz-selectpicker" name="warehouse_id" placeholder="Select Warehouse" data-live-search="true" required>
-                                    @foreach ($warehouses as $key => $warehouse)
-                                        <option value="{{ $warehouse->id  }}"> {{ $warehouse->name . ' (' . $warehouse->code . ')' }} </option>
-                                    @endforeach
+                                <select class="form-control aiz-selectpicker" name="warehouse_id" placeholder="Select Warehouse" data-live-search="true" {{ isset($selectedShelf) ? "disabled" : "" }} required>
+                                    @if( isset($selectedShelf) )
+                                        <option value="{{ $selectedShelf->area->location->warehouse->id  }}" selected > {{ $selectedShelf->area->location->warehouse->name . ' (' . $selectedShelf->area->location->warehouse->code . ')' }} </option>
+                                    @else
+                                        <option value=""> Nothing Selected </option>
+                                        @foreach ($warehouses as $key => $warehouse)
+                                            <option value="{{ $warehouse->id  }}"> {{ $warehouse->name . ' (' . $warehouse->code . ')' }} </option>
+                                        @endforeach
+                                    @endif
                                 </select>
                             </div>
                         </div>
@@ -43,7 +48,10 @@
                         <div class="form-group row">
                             <label class="col-md-3 col-from-label">{{translate('Select Location')}} <span class="text-danger">*</span></label>
                             <div class="col-md-8">
-                                <select class="form-control aiz-selectpicker" name="location_id" placeholder="Select Location" data-live-search="true" required>
+                                <select class="form-control aiz-selectpicker" name="location_id" placeholder="Select Location" data-live-search="true" {{ isset($selectedShelf) ? "disabled" : "" }} required>
+                                    @isset($selectedShelf)
+                                        <option value="{{ $selectedShelf->area->location->id  }}" selected > {{ $selectedShelf->area->location->name . ' (' . $selectedShelf->area->location->code . ')' }} </option>
+                                    @endisset
                                 </select>
                             </div>
                         </div>
@@ -51,7 +59,10 @@
                         <div class="form-group row">
                             <label class="col-md-3 col-from-label">{{translate('Select Area')}} <span class="text-danger">*</span></label>
                             <div class="col-md-8">
-                                <select class="form-control aiz-selectpicker" name="area_id" placeholder="Select Area" data-live-search="true" required>
+                                <select class="form-control aiz-selectpicker" name="area_id" placeholder="Select Area" data-live-search="true" {{ isset($selectedShelf) ? "disabled" : "" }} required>
+                                    @isset($selectedShelf)
+                                        <option value="{{ $selectedShelf->area->id  }}" selected > {{ $selectedShelf->area->name . ' (' . $selectedShelf->area->code . ')' }} </option>
+                                    @endisset
                                 </select>
                             </div>
                         </div>
@@ -59,7 +70,10 @@
                         <div class="form-group row">
                             <label class="col-md-3 col-from-label">{{translate('Select Shelf')}} <span class="text-danger">*</span></label>
                             <div class="col-md-8">
-                                <select class="form-control aiz-selectpicker" name="shelf_id" placeholder="Select Shelf" data-live-search="true" required>
+                                <select class="form-control aiz-selectpicker" name="shelf_id" placeholder="Select Shelf" data-live-search="true" {{ isset($selectedShelf) ? "disabled" : "" }} required>
+                                    @isset($selectedShelf)
+                                        <option value="{{ $selectedShelf->id  }}" selected > {{ $selectedShelf->name . ' (' . $selectedShelf->code . ')' }} </option>
+                                    @endisset
                                 </select>
                             </div>
                         </div>

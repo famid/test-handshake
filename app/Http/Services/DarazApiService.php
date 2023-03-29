@@ -186,4 +186,25 @@ class DarazApiService
             return response()->json($e->getMessage());
         }
     }
+
+    /**
+     * @param string $startRow
+     * @param string $pageSize
+     * @return bool|JsonResponse|string
+     */
+    public function getBrandByPages(string $startRow='0', string $pageSize='20') {
+        try {
+            $apiName = "/category/brands/query";
+            $method = 'GET';
+            $this->apiParams = [
+                'startRow' => $startRow,
+                'pageSize' => $pageSize,
+            ];
+
+            return $this->darazService->execute($this->apiParams, $apiName, $method );
+        } catch (Exception $e) {
+
+            return response()->json($e->getMessage());
+        }
+    }
 }

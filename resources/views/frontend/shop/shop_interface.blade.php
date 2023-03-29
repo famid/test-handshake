@@ -82,12 +82,17 @@
 
                                 <div class="row mb-2">
                                     <div class="col-sm-6">
-                                        <div class="text-left">
-                                            <label class="aiz-checkbox">
+                                        <div class="text-left d-flex align-items-center">
+                                            <label for="">Daraz Connect:</label>
+                                            <label class="aiz-switch aiz-switch-success mb-0 ml-2">
+                                                <input name="daraz_connect" value="1" type="checkbox">
+                                                <span class="slider round"></span>
+                                            </label>
+                                            {{-- <label class="aiz-checkbox">
                                                 <input type="checkbox" name="connect_daraz" id="connect_daraz" {{ old('connect_daraz') ? 'checked' : '' }}>
                                                 <span>{{ translate('Connect with Daraz') }}</span>
                                                 <span class="aiz-square-check"></span>
-                                            </label>
+                                            </label> --}}
                                         </div>
                                     </div>
 

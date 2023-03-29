@@ -83,7 +83,7 @@ class ShelfController extends Controller
      *
      * @return Application|Factory|View
      */
-    public function create()
+    public function create(Request $request)
     {
         CoreComponentRepository::initializeCache();
 
@@ -91,7 +91,17 @@ class ShelfController extends Controller
             ->where('owner_id', auth()->user()->id)
             ->get();
 
-        return $this->loadView('shelf.create', ['warehouses' => $vendorsWarehouses]);
+        $selectedArea = null;
+        if($request->input('id')) {
+            $selectedArea = Area::with('location')
+                ->where('id', $request->input('id'))
+                ->firstOrFail();
+
+            if( !$vendorsWarehouses->contains('id', $selectedArea->location->warehouse->id) )
+                abort(403);
+        }
+
+        return $this->loadView('shelf.create', ['warehouses' => $vendorsWarehouses, 'selectedArea' => $selectedArea]);
     }
 
     public function getAreasByLocation(Request $request)

@@ -146,6 +146,7 @@ Route::resource('subscribers', 'SubscriberController');
 
 Route::get('/brands', 'HomeController@all_brands')->name('brands.all');
 Route::get('/categories', 'HomeController@all_categories')->name('categories.all');
+Route::post('/search-category','HomeController@categorySearch')->name('category.search');
 Route::get('/sellers', 'HomeController@all_seller')->name('sellers');
 Route::get('/coupons', 'HomeController@all_coupons')->name('coupons.all');
 Route::get('/inhouse', 'HomeController@inhouse_products')->name('inhouse.all');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use Hash;
+use Illuminate\Http\JsonResponse;
 use Mail;
 use Cache;
 use Cookie;
@@ -755,5 +756,75 @@ class HomeController extends Controller
     public function inhouse_products(Request $request) {
         $products = filter_products(Product::where('added_by', 'admin'))->with('taxes')->paginate(12)->appends(request()->query());
         return view('frontend.inhouse_products', compact('products'));
+    }
+
+    public function categorySearch(Request $request)
+    {
+        try {
+
+            $categories = Category::where('featured',1);
+
+            if ($request->search_category) {
+
+                $categories = $categories->where('name','like','%'.$request->search_category.'%');
+            }
+
+            $categories = $categories->take(10)->get();
+
+            $view = view('backend.product.products.product_categories',compact('categories'))->render();
+
+            return response()->json([
+                'result'  => true,
+                'data'    => $view
+            ]);
+
+        } catch (\Throwable $th) {
+
+            return response()->json([
+                'result'  => false,
+                'message' => 'Something went wrong! Please try again.'
+            ]);
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function productBrandsSearch(Request $request): JsonResponse
+    {
+        try {
+            $selectedBrandId = null;
+            $queries = $request->query();
+
+            $brandsData = Brand::query();
+
+            if (array_key_exists('search_brand_name', $queries)) {
+                $brandsData = $brandsData->where('name', 'like', '%' . $queries['search_brand_name'] . '%');
+            }
+
+            if (array_key_exists('current_product_brand_id', $queries)) {
+                $selectedBrandId = $queries['current_product_brand_id'];
+                $brandsData = $brandsData->orWhere('id', $selectedBrandId);
+            }
+
+            $brandsData = $brandsData->take(50)->get();
+
+            $view = view(
+                'backend.product.brands.product_brand',
+                ['brands' => $brandsData, 'selectedBrandId' => $selectedBrandId]
+            )->render();
+
+            return response()->json([
+                'result' => true,
+                'data' => $view
+            ]);
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                'result' => false,
+                'message' => 'Something went wrong! Please try again.'
+            ]);
+        }
     }
 }

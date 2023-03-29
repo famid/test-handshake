@@ -84,7 +84,7 @@ class AreaController extends Controller
      *
      * @return Application|Factory|View
      */
-    public function create()
+    public function create(Request $request)
     {
         CoreComponentRepository::initializeCache();
 
@@ -92,7 +92,17 @@ class AreaController extends Controller
             ->where('owner_id', auth()->user()->id)
             ->get();
 
-        return $this->loadView('area.create', ['warehouses' => $vendorsWarehouses]);
+        $selectedLocation = null;
+        if($request->input('id')) {
+            $selectedLocation = Location::with('warehouse')
+                ->where('id', $request->input('id'))
+                ->firstOrFail();
+
+            if( !$vendorsWarehouses->contains('id', $selectedLocation->warehouse->id) )
+                abort(403);
+        }
+
+        return $this->loadView('area.create', ['warehouses' => $vendorsWarehouses, 'selectedLocation' => $selectedLocation]);
     }
 
     public function getLocationsByWarehouse(Request $request)

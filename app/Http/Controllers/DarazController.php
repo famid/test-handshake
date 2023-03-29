@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\DarazApiService;
+use App\Models\Category;
 use App\Models\DarazIntegration;
 use App\Models\User;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Str;
 use Throwable;
 
 class DarazController extends Controller
@@ -106,7 +109,7 @@ class DarazController extends Controller
                 throw new Exception('Access token does not found from daraz');
             }
 
-            if($this->isDarazSellerAccountExist(activeShop()->id, $getAccessToken->account))
+            if(!$this->isDarazSellerAccountExist(activeShop()->id, $getAccessToken->account))
                 throw new Exception('This seller account is already used by another user');
 
             $storeAccessToken = $this->darazIntegrationModel->where('id', $storeDarazCode->id)->update([
@@ -117,8 +120,8 @@ class DarazController extends Controller
 
             if (!$storeAccessToken) throw new Exception('Access token does not found from daraz');
 
-            $updateStatus = $this->userModel->where('id', Auth::user()->id)->update([
-                'daraz_account_status' => 'ACTIVE'
+            $updateStatus = activeShop()->update([
+                'status' => 1
             ]);
 
             if (!$updateStatus) throw new Exception('User status does not updated');
@@ -172,9 +175,86 @@ class DarazController extends Controller
      * @return mixed
      */
     private function isDarazSellerAccountExist($userId, $email) {
-        return activeShop()->where([
-            ['shop_email', $email],
-            ['user_id', '<>', $userId]
-        ])->exists();
+        if(activeShop()->shop_email == $email){
+
+            return true;
+        }
+        return false;
     }
+
+    public function insertCategory(Category $categoryModel, string $filePath='public/category.json'): JsonResponse {
+        try {
+            $jsonString = file_get_contents($filePath);
+            $categoriesApiResponse = json_decode($jsonString, true);
+            $categories = [];
+
+            $this->buildCategoryData($categoriesApiResponse['data'], $categories, 0, 0);
+
+            $categoryModel->insert($categories);
+
+            return response()->json(['success' => true, 'message' => "Data is inserted to database successfully"]);
+
+        } catch (Exception $e) {
+
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function buildCategoryData($node, &$categories, $parentId, $level) {
+        if (!empty($node)) {
+            for($i = 0; $i < count($node); $i++) {
+                $currentNode = $node[$i];
+                $dataToInsert = [
+                    'id' => $currentNode['category_id'],
+                    'name' => $currentNode['name'],
+                    'parent_id' => $parentId,
+                    'level' => $level,
+                    'slug' => Str::slug($currentNode['name']),
+                    'featured' => 1,
+                    'allow_create_product' => $currentNode['leaf']
+                ];
+
+                $categories[] = $dataToInsert;
+                unset($dataToInsert);
+
+                if(isset($currentNode['children'])) {
+                    $this->buildCategoryData(
+                        $currentNode['children'],
+                        $categories,
+                        $currentNode['category_id'],
+                        $level + 1
+                    );
+                }
+            }
+        }
+    }
+
+    function fetchAllBrandsAndStoreInFile() {
+        $brands = [];
+        $pageSize = 200;
+        $startRow = 0;
+
+        do {
+            // Make the API request and decode the JSON response
+            $response = json_decode($this->apiService->getBrandByPages($startRow, $pageSize), true);
+            // Extract the brands from the current API response
+            $module = $response['data']['module'];
+            foreach ($module as $brand) {
+                $brands[] = [
+                    'name' => $brand['name'],
+                    'global_identifier' => $brand['global_identifier'],
+                    'name_en' => $brand['name_en'],
+                    'brand_id' => $brand['brand_id'],
+                ];
+            }
+            // Increase the startRow parameter for the next API request
+            $params['startRow'] = count($brands);
+            // Sleep for a short period of time to avoid overloading the server
+            usleep(500000);
+        } while (count($brands) < $response['data']['total_record']);
+
+        // Store the brands in a JSON file
+        file_put_contents(public_path('brand_list.json'), json_encode($brands));
+    }
+
 }

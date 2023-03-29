@@ -36,7 +36,7 @@ class InventoryController extends Controller
                 $inventory = $inventory->where('bin_location', 'like', '%'.$search.'%');
             }
 
-            $inventory = $inventory->paginate(1);
+            $inventory = $inventory->paginate(2);
 
             return view('frontend.inventory.show', compact(['ownWarehouses', 'product', 'inventory']));
         } catch (Exception $e) {

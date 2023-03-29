@@ -32,9 +32,10 @@
                         <div class="form-group row">
                             <label class="col-md-3 col-from-label">{{translate('Select Warehouse')}} <span class="text-danger">*</span></label>
                             <div class="col-md-8">
-                                <select class="form-control aiz-selectpicker" name="warehouse_id" placeholder="Select Warehouse" data-live-search="true" required>
+                                <select class="form-control aiz-selectpicker" name="warehouse_id" placeholder="Select Warehouse" data-live-search="true" {{ isset($selectedWarehouse) ? "disabled" : "" }} required>
+                                    <option value=""> Nothing Selected </option>
                                     @foreach ($warehouses as $key => $warehouse)
-                                        <option value="{{ $warehouse->id  }}"> {{ $warehouse->name . ' (' . $warehouse->code . ')' }} </option>
+                                        <option value="{{ $warehouse->id  }}" {{ $warehouse->id == $selectedWarehouse ? "selected" : "" }}> {{ $warehouse->name . ' (' . $warehouse->code . ')' }} </option>
                                     @endforeach
                                 </select>
                             </div>

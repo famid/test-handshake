@@ -50,3 +50,12 @@ ALTER TABLE daraz_integrations
 -- Add More column to transaction table --
 ALTER TABLE `transactions` ADD `transaction_id` VARCHAR(255) NOT NULL AFTER `user_id`, ADD `transaction_amount` INT(20) NOT NULL AFTER `transaction_id`, ADD `refrence_id` INT(11) NULL DEFAULT NULL AFTER `transaction_amount`, ADD `type` VARCHAR(255) NOT NULL AFTER `refrence_id`, ADD `note` VARCHAR(255) NULL DEFAULT NULL AFTER `type`;
 ALTER TABLE `transactions` ADD `user_type` VARCHAR(255) NOT NULL AFTER `user_id`;
+
+-- Add more column to daraz_shops_table --
+ALTER TABLE `daraz_shops` ADD `verified_at` DATETIME NULL DEFAULT NULL AFTER `status`, ADD `otp_token` VARCHAR(255) NULL DEFAULT NULL AFTER `verified_at`;
+
+ALTER TABLE `daraz_integrations` ADD `shop_id` INT(11) NOT NULL AFTER `user_id`;
+
+-- Add Column to categories table --
+-- if allow_create_product is True means we can add product under this category --
+ALTER TABLE categories ADD COLUMN `allow_create_product` BOOLEAN DEFAULT FALSE NULL;
