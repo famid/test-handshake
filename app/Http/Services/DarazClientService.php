@@ -281,6 +281,7 @@ class DarazClientService
     public function getApiData($apiUrl, $data) {
         $apiUrl .= '&' . http_build_query($data);
 
+
         $ch = curl_init();
         curl_setopt(
             $ch,
