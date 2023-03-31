@@ -985,7 +985,7 @@
             let skuIsSaleProp = [... attributeResponseData.sku.saleProp.keys()]
 
             console.log("mandatory.isSaleProp: ", mandatoryIsSaleProp, "sku.isSaleProb", skuIsSaleProp, );
-            insertDarazSection(attributeResponseData.normal.mandatory)
+            insertDarazSection(attributeResponseData.normal.mandatory, "#daraz-normal-mandatory")
         }
 
         function buildAttributeField(attribute) {
@@ -1039,12 +1039,8 @@
             `;
         }
 
-        function insertDarazSection(elementList) {
+        function insertDarazSection(elementList, insertedId) {
             let content = "";
-
-            // elementList.forEach((value, key) => {
-            //     console.log(`${key} costs ${value}`);
-            // });
             elementList.forEach((value, key) => {
 
                 let attribute = value;
@@ -1052,11 +1048,8 @@
             });
 
 
-            // console.log("Insert Daraz Section", element.html)
 
-            // let content = "";
-            // content += element.html
-            $('#daraz-normal-mandatory').html(content);
+            $(insertedId).html(content);
             console.log("appended");
 
             AIZ.plugins.bootstrapSelect('refresh');
