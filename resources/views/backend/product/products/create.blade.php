@@ -85,6 +85,9 @@
                         <div class="card-header">
                             <h5 class="mb-0 h6">{{translate('Daraz Integration')}}</h5>
                         </div>
+                        <div class="card-header">
+                            <h5 class="mb-0 h6">{{translate('Daraz Normal Mandatory')}}</h5>
+                        </div>
                         <div class="card-body" id="daraz-normal-mandatory">
 
                         </div>
@@ -121,6 +124,13 @@
                             <h5 class="mb-0 h6">{{translate('Daraz Sku Saleprop')}}</h5>
                         </div>
                         <div class="card-body" id="daraz-sku-sale">
+
+                        </div>
+
+                        <div class="card-header">
+                            <h5 class="mb-0 h6">{{translate('Daraz Others')}}</h5>
+                        </div>
+                        <div class="card-body" id="daraz-other">
 
                         </div>
 
@@ -903,7 +913,9 @@
                 mandatory: new Map(),
                 nonMandatory: new Map(),
                 saleProp: new Map()
-            }
+            },
+
+            other: new Map()
         };
 
         $('#category_id').change(function(e) {
@@ -959,7 +971,6 @@
                         attributeResponseData.normal.nonMandatory.set(key, item);
                     }
 
-
                 } else if (item.attribute_type === "sku") {
                     const key = item.name;
 
@@ -969,12 +980,12 @@
                     } else if (item.is_mandatory) {
 
                         attributeResponseData.sku.mandatory.set(key, item);
-
-
                     } else {
 
                         attributeResponseData.sku.nonMandatory.set(key, item);
                     }
+                } else {
+                    attributeResponseData.other.set(key, item);
                 }
             });
 
@@ -991,6 +1002,7 @@
             insertDarazSection(attributeResponseData.sku.mandatory, "#daraz-normal-mandatory")
             insertDarazSection(attributeResponseData.sku.nonMandatory, "#daraz-sku-nonmandatory")
             insertDarazSection(attributeResponseData.sku.saleProp, "#daraz-sku-sale")
+            insertDarazSection(attributeResponseData.other, "#daraz-other")
         }
 
         function buildAttributeField(attribute) {
