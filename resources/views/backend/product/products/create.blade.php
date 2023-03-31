@@ -81,50 +81,50 @@
                         </div>
                     </div>
 {{--=========================Daraz=========================Integration======--}}
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="mb-0 h6">{{translate('Daraz Integration')}}</h5>
-                        </div>
-                        <div class="card-body" id="daraz-normal-mandatory">
+{{--                    <div class="card">--}}
+{{--                        <div class="card-header">--}}
+{{--                            <h5 class="mb-0 h6">{{translate('Daraz Integration')}}</h5>--}}
+{{--                        </div>--}}
+{{--                        <div class="card-body" id="daraz-normal-mandatory">--}}
 
-                        </div>
+{{--                        </div>--}}
 
-                        <div class="card-header">
-                            <h5 class="mb-0 h6">{{translate('Daraz Normal Non Mandatory')}}</h5>
-                        </div>
-                        <div class="card-body" id="daraz-normal-nonmandatory">
+{{--                        <div class="card-header">--}}
+{{--                            <h5 class="mb-0 h6">{{translate('Daraz Normal Non Mandatory')}}</h5>--}}
+{{--                        </div>--}}
+{{--                        <div class="card-body" id="daraz-normal-nonmandatory">--}}
 
-                        </div>
+{{--                        </div>--}}
 
-                        <div class="card-header">
-                            <h5 class="mb-0 h6">{{translate('Daraz Normal Saleprop')}}</h5>
-                        </div>
-                        <div class="card-body" id="daraz-normal-sale">
+{{--                        <div class="card-header">--}}
+{{--                            <h5 class="mb-0 h6">{{translate('Daraz Normal Saleprop')}}</h5>--}}
+{{--                        </div>--}}
+{{--                        <div class="card-body" id="daraz-normal-sale">--}}
 
-                        </div>
+{{--                        </div>--}}
 
-                        <div class="card-header">
-                            <h5 class="mb-0 h6">{{translate('Daraz SKU Mandatory')}}</h5>
-                        </div>
-                        <div class="card-body" id="daraz-sku-mandatory">
+{{--                        <div class="card-header">--}}
+{{--                            <h5 class="mb-0 h6">{{translate('Daraz SKU Mandatory')}}</h5>--}}
+{{--                        </div>--}}
+{{--                        <div class="card-body" id="daraz-sku-mandatory">--}}
 
-                        </div>
+{{--                        </div>--}}
 
-                        <div class="card-header">
-                            <h5 class="mb-0 h6">{{translate('Daraz Sku Non Mandatory')}}</h5>
-                        </div>
-                        <div class="card-body" id="daraz-sku-nonmandatory">
+{{--                        <div class="card-header">--}}
+{{--                            <h5 class="mb-0 h6">{{translate('Daraz Sku Non Mandatory')}}</h5>--}}
+{{--                        </div>--}}
+{{--                        <div class="card-body" id="daraz-sku-nonmandatory">--}}
 
-                        </div>
+{{--                        </div>--}}
 
-                        <div class="card-header">
-                            <h5 class="mb-0 h6">{{translate('Daraz Sku Saleprop')}}</h5>
-                        </div>
-                        <div class="card-body" id="daraz-sku-sale">
+{{--                        <div class="card-header">--}}
+{{--                            <h5 class="mb-0 h6">{{translate('Daraz Sku Saleprop')}}</h5>--}}
+{{--                        </div>--}}
+{{--                        <div class="card-body" id="daraz-sku-sale">--}}
 
-                        </div>
+{{--                        </div>--}}
 
-                    </div>
+{{--                    </div>--}}
 
 {{--=========================Daraz=========================Integration======--}}
 
@@ -1826,12 +1826,12 @@
             // let skuIsSaleProp = [... attributeResponseData.sku.saleProp.keys()]
 
             // console.log("mandatory.isSaleProp: ", mandatoryIsSaleProp, "sku.isSaleProb", skuIsSaleProp, );
-            insertDarazSection(mandatoryNormalList, ids[0]);
-            insertDarazSection(nonMandatoryNormalList, ids[1]);
-            insertDarazSection(salePropNormalList, ids[2]);
-            insertDarazSection(mandatorySkuList, ids[3]);
-            insertDarazSection(nonMandatorySkuList, ids[4]);
-            insertDarazSection(salePropSkuList, ids[6]);
+            // insertDarazSection(mandatoryNormalList, ids[0]);
+            // insertDarazSection(nonMandatoryNormalList, ids[1]);
+            // insertDarazSection(salePropNormalList, ids[2]);
+            // insertDarazSection(mandatorySkuList, ids[3]);
+            // insertDarazSection(nonMandatorySkuList, ids[4]);
+            // insertDarazSection(salePropSkuList, ids[6]);
         }
 
         function buildAttributeField(attribute) {
