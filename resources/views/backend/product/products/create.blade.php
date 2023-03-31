@@ -1649,255 +1649,255 @@
         // });
 
 
-        $(document).on('input', '.categories', function (e) {
-            var searchData = e.target.value;
+        {{--$(document).on('input', '.categories', function (e) {--}}
+        {{--    var searchData = e.target.value;--}}
 
-            if (searchData.length > 2) {
-
-
-                $.ajax({
-                    headers:{
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    type: "POST",
-                    url: "{{ route('category.search') }}",
-                    data: {
-
-                        "search_category" : searchData
-                    },
-                    async: true,
-                    success: function (response) {
-
-                        if (response.result) {
-
-                            $('#category_id').html(response.data);
-                            AIZ.plugins.bootstrapSelect('refresh');
-                        }
-                    },
-                    error: function (response){
-
-                    }
-                });
-            }
+        {{--    if (searchData.length > 2) {--}}
 
 
-        });
+        {{--        $.ajax({--}}
+        {{--            headers:{--}}
+        {{--                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
+        {{--            },--}}
+        {{--            type: "POST",--}}
+        {{--            url: "{{ route('category.search') }}",--}}
+        {{--            data: {--}}
 
-        $(document).ready(function() {
-            appendBrand();
-        });
+        {{--                "search_category" : searchData--}}
+        {{--            },--}}
+        {{--            async: true,--}}
+        {{--            success: function (response) {--}}
 
-        $(document).on('input', '.brands', function (e) {
-            var searchData = e.target.value;
+        {{--                if (response.result) {--}}
 
-            if (searchData.length > 2) {
-                appendBrand(searchData);
-            }else{
-                appendBrand();
-            }
-        });
+        {{--                    $('#category_id').html(response.data);--}}
+        {{--                    AIZ.plugins.bootstrapSelect('refresh');--}}
+        {{--                }--}}
+        {{--            },--}}
+        {{--            error: function (response){--}}
 
-        function appendBrand(searchData=null) {
-            $.ajax({
-                type: "GET",
-                delay: 1000,
-                url: "{{ route('admin.brands.get-brands') }}",
-                data: {
-
-                    "search_brand_name" : searchData
-                },
-                async: true,
-                success: function (response) {
-
-                    if (response.result) {
-
-                        $('#brand_id').html(response.data);
-
-                        AIZ.plugins.bootstrapSelect('refresh');
-                    }
-                },
-                error: function (response){
-
-                }
-            });
-        }
-
-        const attributeResponseData = {
-            normal: {
-                mandatory: new Map(),
-                nonMandatory: new Map(),
-                saleProp: new Map()
-            },
-            sku: {
-                mandatory: new Map(),
-                nonMandatory: new Map(),
-                saleProp: new Map()
-            }
-        };
-
-        $('#category_id').change(function(e) {
-            e.preventDefault();
-
-            let selectedCategoryId = $(this).val();
-            console.log("Category_id: ", selectedCategoryId);
-
-            appendProductDarazAttributes(selectedCategoryId);
-
-        });
-
-        function appendProductDarazAttributes($categoryId) {
-            $.ajax({
-                type: "GET",
-                delay: 1000,
-                url: "{{ route('daraz.category.attributes') }}",
-                data: {
-
-                    "category_id": $categoryId
-                },
-                async: true,
-                success: function(response) {
-
-                    if (response.result) {
-                        console.log("==================Attribute============");
-                        // console.log(response.data);
-                        manipulateProductAttribute(JSON.parse(response.data));
-
-                        AIZ.plugins.bootstrapSelect('refresh');
-                    }
-                }
-            });
-        }
-
-        function manipulateProductAttribute(attributes) {
-            attributes.data.forEach((item) => {
-
-                let htmlElement = buildAttributeField(item);
-                item.html = htmlElement;
-
-                if (item.attribute_type === "normal") {
-                    const key = item.name;
-
-                    if (item.is_sale_prop) {
-
-                        attributeResponseData.normal.saleProp.set(key, item);
-                    } else if (item.is_mandatory) {
-
-                        attributeResponseData.normal.mandatory.set(key, item);
-                    } else {
-
-                        attributeResponseData.normal.nonMandatory.set(key, item);
-                    }
+        {{--            }--}}
+        {{--        });--}}
+        {{--    }--}}
 
 
-                } else if (item.attribute_type === "sku") {
-                    const key = item.name;
+        {{--});--}}
 
-                    if (item.is_sale_prop) {
-                        // attributeResponseData.sku.saleProp[item.name] = item;
-                        attributeResponseData.sku.saleProp.set(key, item);
-                    } else if (item.is_mandatory) {
+        {{--$(document).ready(function() {--}}
+        {{--    appendBrand();--}}
+        {{--});--}}
 
-                        attributeResponseData.sku.mandatory.set(key, item);
+        {{--$(document).on('input', '.brands', function (e) {--}}
+        {{--    var searchData = e.target.value;--}}
+
+        {{--    if (searchData.length > 2) {--}}
+        {{--        appendBrand(searchData);--}}
+        {{--    }else{--}}
+        {{--        appendBrand();--}}
+        {{--    }--}}
+        {{--});--}}
+
+        {{--function appendBrand(searchData=null) {--}}
+        {{--    $.ajax({--}}
+        {{--        type: "GET",--}}
+        {{--        delay: 1000,--}}
+        {{--        url: "{{ route('admin.brands.get-brands') }}",--}}
+        {{--        data: {--}}
+
+        {{--            "search_brand_name" : searchData--}}
+        {{--        },--}}
+        {{--        async: true,--}}
+        {{--        success: function (response) {--}}
+
+        {{--            if (response.result) {--}}
+
+        {{--                $('#brand_id').html(response.data);--}}
+
+        {{--                AIZ.plugins.bootstrapSelect('refresh');--}}
+        {{--            }--}}
+        {{--        },--}}
+        {{--        error: function (response){--}}
+
+        {{--        }--}}
+        {{--    });--}}
+        {{--}--}}
+
+{{--        const attributeResponseData = {--}}
+{{--            normal: {--}}
+{{--                mandatory: new Map(),--}}
+{{--                nonMandatory: new Map(),--}}
+{{--                saleProp: new Map()--}}
+{{--            },--}}
+{{--            sku: {--}}
+{{--                mandatory: new Map(),--}}
+{{--                nonMandatory: new Map(),--}}
+{{--                saleProp: new Map()--}}
+{{--            }--}}
+{{--        };--}}
+
+{{--        $('#category_id').change(function(e) {--}}
+{{--            e.preventDefault();--}}
+
+{{--            let selectedCategoryId = $(this).val();--}}
+{{--            console.log("Category_id: ", selectedCategoryId);--}}
+
+{{--            appendProductDarazAttributes(selectedCategoryId);--}}
+
+{{--        });--}}
+
+{{--        function appendProductDarazAttributes($categoryId) {--}}
+{{--            $.ajax({--}}
+{{--                type: "GET",--}}
+{{--                delay: 1000,--}}
+{{--                url: "{{ route('daraz.category.attributes') }}",--}}
+{{--                data: {--}}
+
+{{--                    "category_id": $categoryId--}}
+{{--                },--}}
+{{--                async: true,--}}
+{{--                success: function(response) {--}}
+
+{{--                    if (response.result) {--}}
+{{--                        console.log("==================Attribute============");--}}
+{{--                        // console.log(response.data);--}}
+{{--                        manipulateProductAttribute(JSON.parse(response.data));--}}
+
+{{--                        AIZ.plugins.bootstrapSelect('refresh');--}}
+{{--                    }--}}
+{{--                }--}}
+{{--            });--}}
+{{--        }--}}
+
+{{--        function manipulateProductAttribute(attributes) {--}}
+{{--            attributes.data.forEach((item) => {--}}
+
+{{--                let htmlElement = buildAttributeField(item);--}}
+{{--                item.html = htmlElement;--}}
+
+{{--                if (item.attribute_type === "normal") {--}}
+{{--                    const key = item.name;--}}
+
+{{--                    if (item.is_sale_prop) {--}}
+
+{{--                        attributeResponseData.normal.saleProp.set(key, item);--}}
+{{--                    } else if (item.is_mandatory) {--}}
+
+{{--                        attributeResponseData.normal.mandatory.set(key, item);--}}
+{{--                    } else {--}}
+
+{{--                        attributeResponseData.normal.nonMandatory.set(key, item);--}}
+{{--                    }--}}
 
 
-                    } else {
+{{--                } else if (item.attribute_type === "sku") {--}}
+{{--                    const key = item.name;--}}
 
-                        attributeResponseData.sku.nonMandatory.set(key, item);
-                    }
-                }
-            });
+{{--                    if (item.is_sale_prop) {--}}
+{{--                        // attributeResponseData.sku.saleProp[item.name] = item;--}}
+{{--                        attributeResponseData.sku.saleProp.set(key, item);--}}
+{{--                    } else if (item.is_mandatory) {--}}
 
-            let mandatoryNormalList = [...attributeResponseData.normal.mandatory.keys()];
-            let nonMandatoryNormalList = [...attributeResponseData.normal.nonMandatory.keys()];
-            let salePropNormalList = [...attributeResponseData.normal.saleProp.keys()];
-            let mandatorySkuList = [...attributeResponseData.sku.mandatory.keys()];
-            let nonMandatorySkuList = [...attributeResponseData.sku.nonMandatory.keys()];
-            let salePropSkuList = [...attributeResponseData.sku.saleProp.keys()];
-            let ids = [
-                "#daraz-normal-mandatory",
-                "#daraz-normal-nonmandatory",
-                "#daraz-normal-sale",
-                "#daraz-sku-mandatory",
-                "#daraz-sku-nonmandatory",
-                "#daraz-sku-sale",
-            ]
+{{--                        attributeResponseData.sku.mandatory.set(key, item);--}}
 
-            // let mandatoryIsSaleProp = [...attributeResponseData.normal.saleProp.keys()]
-            // let skuIsSaleProp = [... attributeResponseData.sku.saleProp.keys()]
 
-            // console.log("mandatory.isSaleProp: ", mandatoryIsSaleProp, "sku.isSaleProb", skuIsSaleProp, );
-            // insertDarazSection(mandatoryNormalList, ids[0]);
-            // insertDarazSection(nonMandatoryNormalList, ids[1]);
-            // insertDarazSection(salePropNormalList, ids[2]);
-            // insertDarazSection(mandatorySkuList, ids[3]);
-            // insertDarazSection(nonMandatorySkuList, ids[4]);
-            // insertDarazSection(salePropSkuList, ids[6]);
-        }
+{{--                    } else {--}}
 
-        function buildAttributeField(attribute) {
-            let name = attribute.name;
-            let type = "text";
+{{--                        attributeResponseData.sku.nonMandatory.set(key, item);--}}
+{{--                    }--}}
+{{--                }--}}
+{{--            });--}}
 
-            let options = attribute.options
-            let isRequired = attribute.is_mandatory
-            let label = attribute.label
+{{--            let mandatoryNormalList = [...attributeResponseData.normal.mandatory.keys()];--}}
+{{--            let nonMandatoryNormalList = [...attributeResponseData.normal.nonMandatory.keys()];--}}
+{{--            let salePropNormalList = [...attributeResponseData.normal.saleProp.keys()];--}}
+{{--            let mandatorySkuList = [...attributeResponseData.sku.mandatory.keys()];--}}
+{{--            let nonMandatorySkuList = [...attributeResponseData.sku.nonMandatory.keys()];--}}
+{{--            let salePropSkuList = [...attributeResponseData.sku.saleProp.keys()];--}}
+{{--            let ids = [--}}
+{{--                "#daraz-normal-mandatory",--}}
+{{--                "#daraz-normal-nonmandatory",--}}
+{{--                "#daraz-normal-sale",--}}
+{{--                "#daraz-sku-mandatory",--}}
+{{--                "#daraz-sku-nonmandatory",--}}
+{{--                "#daraz-sku-sale",--}}
+{{--            ]--}}
 
-            if (options.length === 0) {
-                return generateInputField(label, name, type, isRequired)
-            } else if(options.length >  0) {
-                return generateSelectField(label, name, type, isRequired, options);
-            }
+{{--            // let mandatoryIsSaleProp = [...attributeResponseData.normal.saleProp.keys()]--}}
+{{--            // let skuIsSaleProp = [... attributeResponseData.sku.saleProp.keys()]--}}
 
-            return null;
-        }
+{{--            // console.log("mandatory.isSaleProp: ", mandatoryIsSaleProp, "sku.isSaleProb", skuIsSaleProp, );--}}
+{{--            // insertDarazSection(mandatoryNormalList, ids[0]);--}}
+{{--            // insertDarazSection(nonMandatoryNormalList, ids[1]);--}}
+{{--            // insertDarazSection(salePropNormalList, ids[2]);--}}
+{{--            // insertDarazSection(mandatorySkuList, ids[3]);--}}
+{{--            // insertDarazSection(nonMandatorySkuList, ids[4]);--}}
+{{--            // insertDarazSection(salePropSkuList, ids[6]);--}}
+{{--        }--}}
 
-        function generateInputField(label, name, type, isRequired) {
-            return `
-                <div class="form-group row">
-                    <label class="col-md-3 col-from-label">
-                        ${label}
-                        ${isRequired ? '<span class="text-danger">*</span>' : ''}
-                    </label>
-                    <div class="col-md-8">
-                        <input type="${type}" class="form-control aiz-tag-input" name="${name}" placeholder="" ${isRequired ? 'required' : ''}>
-                    </div>
-                </div>
-            `;
-        }
+{{--        function buildAttributeField(attribute) {--}}
+{{--            let name = attribute.name;--}}
+{{--            let type = "text";--}}
 
-        function generateSelectField(label, name, type, isRequired, options) {
-            let optionsHtml = '';
+{{--            let options = attribute.options--}}
+{{--            let isRequired = attribute.is_mandatory--}}
+{{--            let label = attribute.label--}}
 
-            options.forEach((option) => {
-                optionsHtml += `<option value="${option.name}">${option.name}</option>`;
-            });
+{{--            if (options.length === 0) {--}}
+{{--                return generateInputField(label, name, type, isRequired)--}}
+{{--            } else if(options.length >  0) {--}}
+{{--                return generateSelectField(label, name, type, isRequired, options);--}}
+{{--            }--}}
 
-            return `
-                <div class="form-group row">
-                    <label class="col-md-3 col-from-label"> ${label}</label>
-                    <div class="col-md-8">
-                        <select class="form-control aiz-selectpicker" name="${name}"
-                            id="" ${isRequired ? 'required' : ''}>
-                            ${optionsHtml}
-                        </select>
-                    </div>
-                </div>
-            `;
-        }
+{{--            return null;--}}
+{{--        }--}}
 
-        function insertDarazSection(elementList, injectedId) {
-            let content = "";
+{{--        function generateInputField(label, name, type, isRequired) {--}}
+{{--            return `--}}
+{{--                <div class="form-group row">--}}
+{{--                    <label class="col-md-3 col-from-label">--}}
+{{--                        ${label}--}}
+{{--                        ${isRequired ? '<span class="text-danger">*</span>' : ''}--}}
+{{--                    </label>--}}
+{{--                    <div class="col-md-8">--}}
+{{--                        <input type="${type}" class="form-control aiz-tag-input" name="${name}" placeholder="" ${isRequired ? 'required' : ''}>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            `;--}}
+{{--        }--}}
 
-            elementList.forEach((element) => {
-                let attribute = attributeResponseData.normal.nonMandatory.get(element);
-                content += attribute.html
-            });
+{{--        function generateSelectField(label, name, type, isRequired, options) {--}}
+{{--            let optionsHtml = '';--}}
 
-            $(injectedId).html(content);
+{{--            options.forEach((option) => {--}}
+{{--                optionsHtml += `<option value="${option.name}">${option.name}</option>`;--}}
+{{--            });--}}
 
-            AIZ.plugins.bootstrapSelect('refresh');
+{{--            return `--}}
+{{--                <div class="form-group row">--}}
+{{--                    <label class="col-md-3 col-from-label"> ${label}</label>--}}
+{{--                    <div class="col-md-8">--}}
+{{--                        <select class="form-control aiz-selectpicker" name="${name}"--}}
+{{--                            id="" ${isRequired ? 'required' : ''}>--}}
+{{--                            ${optionsHtml}--}}
+{{--                        </select>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            `;--}}
+{{--        }--}}
 
-        }
+{{--        function insertDarazSection(elementList, injectedId) {--}}
+{{--            let content = "";--}}
+
+{{--            elementList.forEach((element) => {--}}
+{{--                let attribute = attributeResponseData.normal.nonMandatory.get(element);--}}
+{{--                content += attribute.html--}}
+{{--            });--}}
+
+{{--            $(injectedId).html(content);--}}
+
+{{--            AIZ.plugins.bootstrapSelect('refresh');--}}
+
+{{--        }--}}
     </script>
 
 @endsection
