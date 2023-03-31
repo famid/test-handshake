@@ -929,7 +929,7 @@
                 }
             });
 
-            let mandatoryList = [...attributeResponseData.normal.no.keys()];
+            let mandatoryList = [...attributeResponseData.normal.mandatory.keys()];
             // let nameAttribute = attributeResponseData.normal.mandatory.get('name')
             // console.log("Daaaaaaaaa: ", nameAttribute.html);
             let mandatoryIsSaleProp = [...attributeResponseData.normal.saleProp.keys()]
