@@ -917,23 +917,6 @@
                                     <input type="text" class="form-control" name="name" placeholder="{{ translate('Product Name') }}" onchange="update_sku()" required>
                                 </div>
                             </div>
-                            <div class="form-group row" id="category">
-                                <label class="col-md-3 col-from-label">{{translate('Category')}} <span class="text-danger">*</span></label>
-                                <div class="col-md-8">
-                                    <select class="form-control aiz-selectpicker categories" name="category_id" id="category_id" data-live-search="true" required>
-                                        @include('backend.product.products.product_categories')
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group row" id="brand">
-                                <label class="col-md-3 col-from-label">{{translate('Brand')}}</label>
-                                <div class="col-md-8">
-                                    <select class="form-control aiz-selectpicker brands" name="brand_id" id="brand_id" data-live-search="true">
-                                        <option value="">{{ translate('Select Brand') }}</option>
-                                        {{--                                    @include('backend.product.brands.product_brand')--}}
-                                    </select>
-                                </div>
-                            </div>
                             <div class="form-group row">
                                 <label class="col-md-3 col-from-label">{{translate('Unit')}}</label>
                                 <div class="col-md-8">
