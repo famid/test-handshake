@@ -80,6 +80,55 @@
                             @endif
                         </div>
                     </div>
+                    {{--=========================Daraz=========================Integration======--}}
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0 h6">{{translate('Daraz Integration')}}</h5>
+                        </div>
+                        <div class="card-body" id="daraz-normal-mandatory">
+
+                        </div>
+
+                        <div class="card-header">
+                            <h5 class="mb-0 h6">{{translate('Daraz Normal Non Mandatory')}}</h5>
+                        </div>
+                        <div class="card-body" id="daraz-normal-nonmandatory">
+
+                        </div>
+
+                        <div class="card-header">
+                            <h5 class="mb-0 h6">{{translate('Daraz Normal Saleprop')}}</h5>
+                        </div>
+                        <div class="card-body" id="daraz-normal-sale">
+
+                        </div>
+
+                        <div class="card-header">
+                            <h5 class="mb-0 h6">{{translate('Daraz SKU Mandatory')}}</h5>
+                        </div>
+                        <div class="card-body" id="daraz-sku-mandatory">
+
+                        </div>
+
+                        <div class="card-header">
+                            <h5 class="mb-0 h6">{{translate('Daraz Sku Non Mandatory')}}</h5>
+                        </div>
+                        <div class="card-body" id="daraz-sku-nonmandatory">
+
+                        </div>
+
+                        <div class="card-header">
+                            <h5 class="mb-0 h6">{{translate('Daraz Sku Saleprop')}}</h5>
+                        </div>
+                        <div class="card-body" id="daraz-sku-sale">
+
+                        </div>
+
+                    </div>
+
+                    {{--=========================Daraz=========================Integration======--}}
+
+
                     <div class="card">
                         <div class="card-header">
                             <h5 class="mb-0 h6">{{translate('Product Images')}}</h5>
@@ -1003,7 +1052,8 @@
 
             // let content = "";
             // content += element.html
-            $('#daraz-dynamic-field').html(content);
+            $('#daraz-normal-mandatory').html(content);
+            console.log("appended");
 
             AIZ.plugins.bootstrapSelect('refresh');
 
