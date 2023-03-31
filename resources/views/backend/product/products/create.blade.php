@@ -994,7 +994,7 @@
             let content = "";
 
             elementList.forEach((element) => {
-                let attribute = attributeResponseData.normal.nonMandatory.get(element);
+                let attribute = attributeResponseData.normal.mandatory.get(element);
                 content += attribute.html
             });
 
