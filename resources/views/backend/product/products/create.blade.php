@@ -978,14 +978,19 @@
                 }
             });
 
-            let nomalMandatoryList = [...attributeResponseData.normal.mandatory.keys()];
-            // let nameAttribute = attributeResponseData.normal.mandatory.get('name')
-            // console.log("Daaaaaaaaa: ", nameAttribute.html);
-            let mandatoryIsSaleProp = [...attributeResponseData.normal.saleProp.keys()]
-            let skuIsSaleProp = [... attributeResponseData.sku.saleProp.keys()]
+            // let nomalMandatoryList = [...attributeResponseData.normal.mandatory.keys()];
+            // // let nameAttribute = attributeResponseData.normal.mandatory.get('name')
+            // // console.log("Daaaaaaaaa: ", nameAttribute.html);
+            // let mandatoryIsSaleProp = [...attributeResponseData.normal.saleProp.keys()]
+            // let skuIsSaleProp = [... attributeResponseData.sku.saleProp.keys()]
 
             console.log("mandatory.isSaleProp: ", mandatoryIsSaleProp, "sku.isSaleProb", skuIsSaleProp, );
             insertDarazSection(attributeResponseData.normal.mandatory, "#daraz-normal-mandatory")
+            insertDarazSection(attributeResponseData.normal.nonMandatory, "#daraz-normal-nonmandatory")
+            insertDarazSection(attributeResponseData.normal.saleProp, "#daraz-normal-sale")
+            insertDarazSection(attributeResponseData.sku.mandatory, "#daraz-normal-mandatory")
+            insertDarazSection(attributeResponseData.sku.nonMandatory, "#daraz-sku-nonmandatory")
+            insertDarazSection(attributeResponseData.sku.saleProp, "#daraz-sku-sale")
         }
 
         function buildAttributeField(attribute) {
@@ -1047,10 +1052,7 @@
                 content += attribute.html
             });
 
-
-
             $(insertedId).html(content);
-            console.log("appended");
 
             AIZ.plugins.bootstrapSelect('refresh');
 
