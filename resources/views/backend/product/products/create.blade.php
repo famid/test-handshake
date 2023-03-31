@@ -1910,11 +1910,6 @@
                 content += attribute.html
             });
 
-
-            // console.log("Insert Daraz Section", element.html)
-
-            // let content = "";
-            // content += element.html
             $(injectedId).html(content);
 
             AIZ.plugins.bootstrapSelect('refresh');
