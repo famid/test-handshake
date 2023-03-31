@@ -182,6 +182,14 @@ class DarazController extends Controller
         return false;
     }
 
+    public function getDarazAttributes(Request $request) {
+        $data = $this->apiService->getCategoryAttributes($request->category_id);
+        return response()->json([
+            'result' => true,
+            'data' => $data
+        ]);
+    }
+
     public function insertCategory(Category $categoryModel, string $filePath='public/category.json'): JsonResponse {
         try {
             $jsonString = file_get_contents($filePath);

@@ -434,6 +434,8 @@ Route::get('/mobile-page/{slug}', 'PageController@mobile_custom_page')->name('mo
 //Custom page
 Route::get('/{slug}', 'PageController@show_custom_page')->name('custom-pages.show_custom_page');
 
+Route::get('daraz/category/attributes', 'DarazController@getDarazAttributes')->name('daraz.category.attributes');
+
 Route::get('/test/daraz', function(\App\Http\Services\DarazApiService  $apiService, \App\Http\Controllers\DarazController $darazController) {
 
 //    dd($apiService->getCategoryTree());
