@@ -978,14 +978,14 @@
                 }
             });
 
-            let mandatoryList = [...attributeResponseData.normal.mandatory.keys()];
+            let nomalMandatoryList = [...attributeResponseData.normal.mandatory.keys()];
             // let nameAttribute = attributeResponseData.normal.mandatory.get('name')
             // console.log("Daaaaaaaaa: ", nameAttribute.html);
             let mandatoryIsSaleProp = [...attributeResponseData.normal.saleProp.keys()]
             let skuIsSaleProp = [... attributeResponseData.sku.saleProp.keys()]
 
             console.log("mandatory.isSaleProp: ", mandatoryIsSaleProp, "sku.isSaleProb", skuIsSaleProp, );
-            insertDarazSection(mandatoryList)
+            insertDarazSection(attributeResponseData.normal.mandatory)
         }
 
         function buildAttributeField(attribute) {
@@ -1042,8 +1042,12 @@
         function insertDarazSection(elementList) {
             let content = "";
 
-            elementList.forEach((element) => {
-                let attribute = attributeResponseData.normal.mandatory.get(element);
+            // elementList.forEach((value, key) => {
+            //     console.log(`${key} costs ${value}`);
+            // });
+            elementList.forEach((value, key) => {
+
+                let attribute = value;
                 content += attribute.html
             });
 
