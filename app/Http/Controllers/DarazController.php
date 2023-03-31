@@ -203,7 +203,7 @@ class DarazController extends Controller
             return response()->json(['success' => true, 'message' => "Data is inserted to database successfully"]);
 
         } catch (Exception $e) {
-
+            dd($e->getMessage());
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
     }
@@ -219,7 +219,7 @@ class DarazController extends Controller
                     'level' => $level,
                     'slug' => Str::slug($currentNode['name']),
                     'featured' => 1,
-                    'allow_create_product' => $currentNode['leaf']
+//                    'allow_create_product' => $currentNode['leaf']
                 ];
 
                 $categories[] = $dataToInsert;
