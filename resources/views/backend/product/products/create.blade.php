@@ -881,7 +881,7 @@
 
                     if (response.result) {
                         console.log("==================Attribute============");
-                        // console.log(response.data);
+                        console.log(response.data, "from backend");
                         manipulateProductAttribute(JSON.parse(response.data));
 
                         AIZ.plugins.bootstrapSelect('refresh');
