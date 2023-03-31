@@ -983,8 +983,8 @@
             // // console.log("Daaaaaaaaa: ", nameAttribute.html);
             // let mandatoryIsSaleProp = [...attributeResponseData.normal.saleProp.keys()]
             // let skuIsSaleProp = [... attributeResponseData.sku.saleProp.keys()]
+            // console.log("mandatory.isSaleProp: ", mandatoryIsSaleProp, "sku.isSaleProb", skuIsSaleProp, );
 
-            console.log("mandatory.isSaleProp: ", mandatoryIsSaleProp, "sku.isSaleProb", skuIsSaleProp, );
             insertDarazSection(attributeResponseData.normal.mandatory, "#daraz-normal-mandatory")
             insertDarazSection(attributeResponseData.normal.nonMandatory, "#daraz-normal-nonmandatory")
             insertDarazSection(attributeResponseData.normal.saleProp, "#daraz-normal-sale")
