@@ -1036,7 +1036,7 @@
                         current = current[payloadPath[j]];
                     }
 
-                    console.log(payloadPath, 'value; ',value, payload);
+                    console.log(payload);
                 });
             }
         };
@@ -1047,27 +1047,24 @@
             for(let i=0; i < selectFields.length; i++) {
                 selectFields[i].addEventListener('change', event => {
                     let payloadPath = event.target.getAttribute('data-payload-path');
-                    console.log(event.target.value);
+                    let value = event.target.value;
+                    payloadPath = payloadPath.split(',');
+
+                    let current = payload;
+                    for (let j = 0; j < payloadPath.length; j++) {
+                        if (!current[payloadPath[j]]) {
+                            current[payloadPath[j]] = {};
+                        }
+                        if (j === payloadPath.length - 1) {
+                            current[payloadPath[j]] = value;
+                        }
+                        current = current[payloadPath[j]];
+                    }
+
+                    console.log(payload);
                 });
             }
 
-            // let value = event.target.value;
-            //
-            //
-            // payloadPath = payloadPath.split(',');
-
-            // let current = payload;
-            // for (let j = 0; j < payloadPath.length; j++) {
-            //     if (!current[payloadPath[j]]) {
-            //         current[payloadPath[j]] = {};
-            //     }
-            //     if (j === payloadPath.length - 1) {
-            //         current[payloadPath[j]] = value;
-            //     }
-            //     current = current[payloadPath[j]];
-            // }
-            //
-            // console.log(payloadPath, 'value; ',value, payload);
         };
 
         function buildAttributeField(attribute) {
