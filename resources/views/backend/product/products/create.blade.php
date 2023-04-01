@@ -1046,7 +1046,7 @@
             if (options.length === 0) {
                 return generateInputField(attribute.payloadPath, label, name, type, isRequired)
             } else if(options.length >  0) {
-                return generateSelectField(attribute.payloadPath, name, type, isRequired, options);
+                return generateSelectField(attribute.payloadPath,label, name, type, isRequired, options);
             }
 
             return null;
