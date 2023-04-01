@@ -1047,9 +1047,27 @@
             for(let i=0; i < selectFields.length; i++) {
                 selectFields[i].addEventListener('keyup', event => {
                     let payloadPath = event.target.getAttribute('data-payload-path');
-                    console.log(payloadPath);
+                    console.log(event.target);
                 });
             }
+
+            // let value = event.target.value;
+            //
+            //
+            // payloadPath = payloadPath.split(',');
+
+            // let current = payload;
+            // for (let j = 0; j < payloadPath.length; j++) {
+            //     if (!current[payloadPath[j]]) {
+            //         current[payloadPath[j]] = {};
+            //     }
+            //     if (j === payloadPath.length - 1) {
+            //         current[payloadPath[j]] = value;
+            //     }
+            //     current = current[payloadPath[j]];
+            // }
+            //
+            // console.log(payloadPath, 'value; ',value, payload);
         };
 
         function buildAttributeField(attribute) {
