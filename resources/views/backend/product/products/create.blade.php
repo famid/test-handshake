@@ -902,6 +902,7 @@
             });
         }
 
+        let payload = {};
 
         const attributeResponseData = {
             normal: {
@@ -1019,7 +1020,23 @@
             for(let i=0; i < inputFields.length; i++) {
                 inputFields[i].addEventListener('keyup', event => {
                     let payloadPath = event.target.getAttribute('data-payload-path');
-                    console.log(payloadPath);
+                    let value = event.target.value;
+
+
+                    payloadPath = payloadPath.split(',');
+
+                    let current = payload;
+                    for (let j = 0; j < payloadPath.length; j++) {
+                        if (!current[payloadPath[j]]) {
+                            current[payloadPath[j]] = {};
+                        }
+                        if (j === payloadPath.length - 1) {
+                            current[payloadPath[j]] = value;
+                        }
+                        current = current[payloadPath[j]];
+                    }
+
+                    console.log(payloadPath, 'value; ',value, payload);
                 });
             }
         };
