@@ -954,13 +954,11 @@
         function manipulateProductAttribute(attributes) {
             attributes.data.forEach((item) => {
 
-                let htmlElement = buildAttributeField(item);
-                item.html = htmlElement;
-
-
                 if (item.attribute_type === "normal") {
                     const key = item.name;
                     item.payloadPath = `Product,Attributes,${item.name}`;
+                    let htmlElement = buildAttributeField(item);
+                    item.html = htmlElement;
 
 
                     if (item.is_sale_prop) {
@@ -977,6 +975,8 @@
                 } else if (item.attribute_type === "sku") {
                     const key = item.name;
                     item.payloadPath = `Product,Skus,Sku,${item.name}`;
+                    let htmlElement = buildAttributeField(item);
+                    item.html = htmlElement;
 
                     if (item.is_sale_prop) {
                         // attributeResponseData.sku.saleProp[item.name] = item;
