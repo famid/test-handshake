@@ -1045,7 +1045,7 @@
             let selectFields = document.querySelectorAll('.daraz-select-field');
 
             for(let i=0; i < selectFields.length; i++) {
-                selectFields[i].addEventListener('keyup', event => {
+                selectFields[i].addEventListener('change', event => {
                     let payloadPath = event.target.getAttribute('data-payload-path');
                     console.log(event.target);
                 });
