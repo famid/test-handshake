@@ -957,8 +957,11 @@
                 let htmlElement = buildAttributeField(item);
                 item.html = htmlElement;
 
+
                 if (item.attribute_type === "normal") {
                     const key = item.name;
+                    item.payloadPath = `Product,Attributes,${item.name}`;
+
 
                     if (item.is_sale_prop) {
 
@@ -973,6 +976,7 @@
 
                 } else if (item.attribute_type === "sku") {
                     const key = item.name;
+                    item.payloadPath = `Product,Skus,Sku,${item.name}`;
 
                     if (item.is_sale_prop) {
                         // attributeResponseData.sku.saleProp[item.name] = item;
@@ -1003,7 +1007,33 @@
             insertDarazSection(attributeResponseData.sku.nonMandatory, "#daraz-sku-nonmandatory")
             insertDarazSection(attributeResponseData.sku.saleProp, "#daraz-sku-sale")
             insertDarazSection(attributeResponseData.other, "#daraz-other")
+
+            // add event-
+            fetchDarazInputValue();
+            fetchDarazSelectValue();
         }
+
+        function fetchDarazInputValue(){
+            let inputFields = document.querySelectorAll('.daraz-input-field');
+
+            for(let i=0; i < inputFields.length; i++) {
+                inputFields[i].addEventListener('keyup', event => {
+                    let payloadPath = event.target.getAttribute('data-payload-path');
+                    console.log(payloadPath);
+                });
+            }
+        };
+
+        function fetchDarazSelectValue(){
+            let selectFields = document.querySelectorAll('.daraz-select-field');
+
+            for(let i=0; i < selectFields.length; i++) {
+                selectFields[i].addEventListener('keyup', event => {
+                    let payloadPath = event.target.getAttribute('data-payload-path');
+                    console.log(payloadPath);
+                });
+            }
+        };
 
         function buildAttributeField(attribute) {
             let name = attribute.name;
@@ -1014,15 +1044,15 @@
             let label = attribute.label
 
             if (options.length === 0) {
-                return generateInputField(label, name, type, isRequired)
+                return generateInputField(attribute.payloadPath, label, name, type, isRequired)
             } else if(options.length >  0) {
-                return generateSelectField(label, name, type, isRequired, options);
+                return generateSelectField(attribute.payloadPath, name, type, isRequired, options);
             }
 
             return null;
         }
 
-        function generateInputField(label, name, type, isRequired) {
+        function generateInputField(payloadPath, label, name, type, isRequired) {
             return `
                 <div class="form-group row">
                     <label class="col-md-3 col-from-label">
@@ -1030,13 +1060,13 @@
                         ${isRequired ? '<span class="text-danger">*</span>' : ''}
                     </label>
                     <div class="col-md-8">
-                        <input type="${type}" class="form-control aiz-tag-input" name="${name}" placeholder="" ${isRequired ? 'required' : ''}>
+                        <input type="${type}" class="form-control aiz-tag-input daraz-input-field" name="${name}" placeholder="" ${isRequired ? 'required' : ''} data-payload-path=${payloadPath}>
                     </div>
                 </div>
             `;
         }
 
-        function generateSelectField(label, name, type, isRequired, options) {
+        function generateSelectField(payloadPath, label, name, type, isRequired, options) {
             let optionsHtml = '';
 
             options.forEach((option) => {
@@ -1047,8 +1077,8 @@
                 <div class="form-group row">
                     <label class="col-md-3 col-from-label"> ${label}</label>
                     <div class="col-md-8">
-                        <select class="form-control aiz-selectpicker" name="${name}"
-                            id="" ${isRequired ? 'required' : ''}>
+                        <select class="form-control aiz-selectpicker daraz-select-field" name="${name}"
+                            id="" ${isRequired ? 'required' : ''} data-payload-path=${payloadPath}>
                             ${optionsHtml}
                         </select>
                     </div>
@@ -1069,6 +1099,8 @@
             AIZ.plugins.bootstrapSelect('refresh');
 
         }
+
+
     </script>
 
 @endsection
