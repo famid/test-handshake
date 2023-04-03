@@ -450,3 +450,5 @@ Route::get('/test/daraz', function(\App\Http\Services\DarazApiService  $apiServi
 //    dd($images);
 });
 
+Route::post('/test/daraz/create/product', 'DarazController@createProduct')->name('test.daraz.create');
+

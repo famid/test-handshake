@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\DarazApiService;
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\DarazIntegration;
 use App\Models\User;
@@ -182,14 +183,37 @@ class DarazController extends Controller
         return false;
     }
 
-    public function getDarazAttributes(Request $request) {
-        $data = $this->apiService->getCategoryAttributes($request->category_id);
-        return response()->json([
-            'result' => true,
-            'data' => $data
-        ]);
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getAttributes(Request $request): JsonResponse
+    {
+        try {
+            $data = $this->apiService->getCategoryAttributes($request->category_id);
+
+//            $renderViewResponse = view(
+//                'backend.product.products.product_daraz_attributes',
+//                ['attributes' => json_decode($data, true)]
+//            )->render();
+            return response()->json([
+                'result' => true,
+                'data' => $data
+            ]);
+        } catch (Exception $e) {
+
+            return response()->json([
+                'result' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 
+    /**
+     * @param Category $categoryModel
+     * @param string $filePath
+     * @return JsonResponse
+     */
     public function insertCategory(Category $categoryModel, string $filePath='public/category.json'): JsonResponse {
         try {
             $jsonString = file_get_contents($filePath);
@@ -203,11 +227,18 @@ class DarazController extends Controller
             return response()->json(['success' => true, 'message' => "Data is inserted to database successfully"]);
 
         } catch (Exception $e) {
-            dd($e->getMessage());
+
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
     }
 
+    /**
+     * @param $node
+     * @param $categories
+     * @param $parentId
+     * @param $level
+     * @return void
+     */
     public function buildCategoryData($node, &$categories, $parentId, $level) {
         if (!empty($node)) {
             for($i = 0; $i < count($node); $i++) {
@@ -219,7 +250,7 @@ class DarazController extends Controller
                     'level' => $level,
                     'slug' => Str::slug($currentNode['name']),
                     'featured' => 1,
-//                    'allow_create_product' => $currentNode['leaf']
+                    'allow_create_product' => $currentNode['leaf']
                 ];
 
                 $categories[] = $dataToInsert;
@@ -237,32 +268,62 @@ class DarazController extends Controller
         }
     }
 
-    function fetchAllBrandsAndStoreInFile() {
+    /**
+     * This function is used for fetch all brands list from daraz
+     * and store to brands table in database
+     * @return void
+     */
+    public function fetchAllBrandsAndStore() {
         $brands = [];
         $pageSize = 200;
         $startRow = 0;
-
         do {
             // Make the API request and decode the JSON response
             $response = json_decode($this->apiService->getBrandByPages($startRow, $pageSize), true);
+
             // Extract the brands from the current API response
             $module = $response['data']['module'];
+
             foreach ($module as $brand) {
                 $brands[] = [
+                    'id' => $brand['brand_id'],
                     'name' => $brand['name'],
-                    'global_identifier' => $brand['global_identifier'],
-                    'name_en' => $brand['name_en'],
-                    'brand_id' => $brand['brand_id'],
+                    'slug' => Str::slug($brand['name']),
+                    'top' => 0,
                 ];
             }
+
             // Increase the startRow parameter for the next API request
-            $params['startRow'] = count($brands);
+            $startRow = count($brands);
+
             // Sleep for a short period of time to avoid overloading the server
             usleep(500000);
+
+            // $response['data']['total_record' == total number of data
         } while (count($brands) < $response['data']['total_record']);
 
+
         // Store the brands in a JSON file
-        file_put_contents(public_path('brand_list.json'), json_encode($brands));
+//        file_put_contents(public_path('brand_list.json'), json_encode($brands));
+
+        try {
+            $batchSize = 1000;
+            $chunks = array_chunk($brands, $batchSize);
+
+            foreach ($chunks as $chunk) {
+                Brand::insert($chunk);
+            }
+
+        } catch (Exception $e) {
+
+            dd($e->getMessage());
+        }
+    }
+
+    public function createProduct(Request $request) {
+
+        $accessToken = "500009016320lwdjscVOjWhCvAKuzFiiRj3GuWkFXjxq1bfb4453hROWtgIx05";
+        dd($this->apiService->createProduct($accessToken, $request->payload));
     }
 
 }

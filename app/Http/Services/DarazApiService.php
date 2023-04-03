@@ -114,7 +114,7 @@ class DarazApiService
         }
     }
 
-    private function buildProductPayload() {
+    private function buildProductPayload($payload) {
         $array = [
             "Product" => [
                 "PrimaryCategory" => "20000013",
@@ -143,7 +143,6 @@ class DarazApiService
                         "size" => "40",
                         "quantity" => "5",
                         "price" => "388",
-
                         "package_length" => "11",
                         "package_height" => "22",
                         "package_weight" => "33",
@@ -159,9 +158,20 @@ class DarazApiService
                 ]
             ]
         ];
+        $Image = [
+//            0 => "https://my-live-02.slatic.net/p/765888ef9ec9e81106f451134c94048f.jpg",
+//            1 => "https://my-live-02.slatic.net/p/9eca31edef9f05f7e42f0f19e4d412a3.jpg"
+            0 => "https://static-01.daraz.com.bd/p/32ac6673eef212b0a506dc325a1d0198.jpg",
+//            1 => "https://www.daraz.com.bd/products/echolac-4-7005-18-inc-i203620471-s1151673897.html?spm=a2a0e.searchlistcategory.list.1.62cd13dbTdsvBe&search=1"
+        ];
+        $categoryId = $payload['PrimaryCategory'];
+        unset($payload['PrimaryCategory']);
+        $payload['Product']['PrimaryCategory'] = $categoryId;
+        $payload['Product']["Images"] = ['Image' => $Image];
+
 
         return ArrayToXml::convert(
-            $array,
+            $payload,
             'Request',
             true,
             "UTF-8"
@@ -174,11 +184,12 @@ class DarazApiService
      * @param $accessToken
      * @return bool|JsonResponse|string|null
      */
-    public function createProduct($accessToken) {
+    public function createProduct($accessToken, $payload) {
         try {
             $apiName = "/product/create";
             $method = 'POST';
-            $this->apiParams ['payload'] = $this->buildProductPayload();
+            $this->apiParams ['payload'] = $this->buildProductPayload($payload);
+//            $this->apiParams ['payload'] = $payload;
 
             return $this->darazService->execute($this->apiParams, $apiName, $method, $accessToken);
 
