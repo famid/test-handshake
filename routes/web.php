@@ -434,20 +434,14 @@ Route::get('/mobile-page/{slug}', 'PageController@mobile_custom_page')->name('mo
 //Custom page
 Route::get('/{slug}', 'PageController@show_custom_page')->name('custom-pages.show_custom_page');
 
-Route::get('daraz/category/attributes', 'DarazController@getDarazAttributes')->name('daraz.category.attributes');
+// Daraz Api
+
+Route::get('daraz/category/attribute', 'DarazController@getAttributes')->name('daraz.category.attributes');
+
 
 Route::get('/test/daraz', function(\App\Http\Services\DarazApiService  $apiService, \App\Http\Controllers\DarazController $darazController) {
-
-//    dd($apiService->getCategoryTree());
-    dd($apiService->getCategoryAttributes(1956));
-//    dd($apiService->createProduct());
-
-//    dd($apiService->getCategoryAttributes());
-//    dd(App::make('url')->to('/'));
-//    $productData = Product::first();
-//    $productImages = get_images_path($productData->photos);
-//    $images = array_map('static_asset', $productImages);
-//    dd($images);
+    $categoryId = 1740;
+    dd($darazController->getAttributes($categoryId));
 });
 
 Route::post('/test/daraz/create/product', 'DarazController@createProduct')->name('test.daraz.create');
