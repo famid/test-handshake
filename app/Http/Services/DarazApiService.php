@@ -138,16 +138,16 @@ class DarazApiService
                 ],
                 "Skus" => [
                     "Sku" => [
-                        "saleProp" => [
-                            "color_family" => ["Green", "Gold"],
-                            "size" => ["10", "20"],
-
-                        ],
-                        "SellerSku" => "handshake-own-sku",
-//                        "color_family" => "Green",
+//                        "saleProp" => [
+//                            "color_family" => ["Green", "Gold"],
+//                            "size" => ["10", "20"],
+//
+//                        ],
+                        "SellerSku" => "handshake-multiple-sku",
+                        "color_family" => [0 => "Green", 1 => "Brown"],
 //                        "size" => "40",
                         "quantity" => "5",
-                        "price" => "388",
+                        "price" => [0 => "388", 1 => "885"],
                         "package_length" => "11",
                         "package_height" => "22",
                         "package_weight" => "33",
