@@ -143,7 +143,7 @@ class DarazApiService
                             "size" => ["10", "20"],
 
                         ],
-                        "SellerSku" => "local-sku",
+                        "SellerSku" => "handshake-own-sku",
 //                        "color_family" => "Green",
 //                        "size" => "40",
                         "quantity" => "5",
