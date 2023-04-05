@@ -146,9 +146,9 @@ class DarazApiService
 //                        "size" => "40",
                         "quantity" => "5",
                         "price" => "388",
-//                        "package_length" => "11",
-//                        "package_height" => "22",
-//                        "package_weight" => "33",
+                        "package_length" => "11",
+                        "package_height" => "22",
+                        "package_weight" => "33",
                         "package_width" => "44",
                         "package_content" => "this is what's in the box",
                         "Images" => [
