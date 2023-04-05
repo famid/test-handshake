@@ -189,7 +189,7 @@ class DarazApiService
             $apiName = "/product/create";
             $method = 'POST';
             $this->apiParams ['payload'] = $this->buildProductPayload($payload);
-            dd($this->apiParams ['payload']);
+//            dd($this->apiParams ['payload']);
 //            $this->apiParams ['payload'] = $payload;
 
             return $this->darazService->execute($this->apiParams, $apiName, $method, $accessToken);
