@@ -138,11 +138,14 @@ class DarazApiService
                 ],
                 "Skus" => [
                     "Sku" => [
-//                        "SellerSku" => "local-sku",
-//                        "color_family" => "Green",
+                        "saleProp" => [
+                            "color_family" => ["Green", "Gold"],
+                        ],
+                        "SellerSku" => "local-sku",
+                        "color_family" => "Green",
 //                        "size" => "40",
-//                        "quantity" => "5",
-//                        "price" => "388",
+                        "quantity" => "5",
+                        "price" => "388",
 //                        "package_length" => "11",
 //                        "package_height" => "22",
 //                        "package_weight" => "33",
