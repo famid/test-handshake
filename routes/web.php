@@ -441,6 +441,8 @@ Route::get('daraz/category/attribute', 'DarazController@getAttributes')->name('d
 
 Route::get('/test/daraz', function(\App\Http\Services\DarazApiService  $apiService, \App\Http\Controllers\DarazController $darazController) {
     $categoryId = 1740;
+    $accessToken = "500009016320lwdjscVOjWhCvAKuzFiiRj3GuWkFXjxq1bfb4453hROWtgIx05";
+    dd($apiService->createProduct($accessToken));
     dd($darazController->getAttributes($categoryId));
 });
 

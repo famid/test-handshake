@@ -114,7 +114,7 @@ class DarazApiService
         }
     }
 
-    private function buildProductPayload($payload) {
+    private function buildProductPayload($payload=null) {
         $array = [
             "Product" => [
                 "PrimaryCategory" => "20000013",
@@ -164,14 +164,14 @@ class DarazApiService
             0 => "https://static-01.daraz.com.bd/p/32ac6673eef212b0a506dc325a1d0198.jpg",
 //            1 => "https://www.daraz.com.bd/products/echolac-4-7005-18-inc-i203620471-s1151673897.html?spm=a2a0e.searchlistcategory.list.1.62cd13dbTdsvBe&search=1"
         ];
-        $categoryId = $payload['PrimaryCategory'];
-        unset($payload['PrimaryCategory']);
-        $payload['Product']['PrimaryCategory'] = $categoryId;
-        $payload['Product']["Images"] = ['Image' => $Image];
+//        $categoryId = $payload['PrimaryCategory'];
+//        unset($payload['PrimaryCategory']);
+//        $payload['Product']['PrimaryCategory'] = $categoryId;
+//        $payload['Product']["Images"] = ['Image' => $Image];
 
 
         return ArrayToXml::convert(
-            $payload,
+            $array,
             'Request',
             true,
             "UTF-8"
@@ -184,7 +184,7 @@ class DarazApiService
      * @param $accessToken
      * @return bool|JsonResponse|string|null
      */
-    public function createProduct($accessToken, $payload) {
+    public function createProduct($accessToken, $payload=null) {
         try {
             $apiName = "/product/create";
             $method = 'POST';
