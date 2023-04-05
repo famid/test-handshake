@@ -127,7 +127,7 @@ class DarazApiService
                     ]
                 ],
                 "Attributes" => [
-                    "name" => "Handshake Module",
+                    "name" => "Handshake Module1",
                     "short_description" => "This is a nice product",
 //                    "brand_id"=>"23892",
                     "brand" => "AKG",
@@ -140,9 +140,11 @@ class DarazApiService
                     "Sku" => [
                         "saleProp" => [
                             "color_family" => ["Green", "Gold"],
+                            "size" => ["10", "20"],
+
                         ],
                         "SellerSku" => "local-sku",
-                        "color_family" => "Green",
+//                        "color_family" => "Green",
 //                        "size" => "40",
                         "quantity" => "5",
                         "price" => "388",
