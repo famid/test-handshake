@@ -127,7 +127,7 @@ class DarazApiService
                     ]
                 ],
                 "Attributes" => [
-                    "name" => "Handshake Module1",
+                    "name" => "Handshake Multiple module",
                     "short_description" => "This is a nice product",
 //                    "brand_id"=>"23892",
                     "brand" => "AKG",
