@@ -117,7 +117,7 @@ class DarazApiService
     private function buildProductPayload($payload=null) {
         $array = [
             "Product" => [
-                "PrimaryCategory" => "20000013",
+                "PrimaryCategory" => "1740",
                 "SPUId" => [],
                 "AssociatedSku" => [],
                 "Images" => [
@@ -138,14 +138,14 @@ class DarazApiService
                 ],
                 "Skus" => [
                     "Sku" => [
-                        "SellerSku" => "handshake-api-create-test-2",
-                        "color_family" => "Green",
-                        "size" => "40",
-                        "quantity" => "5",
-                        "price" => "388",
-                        "package_length" => "11",
-                        "package_height" => "22",
-                        "package_weight" => "33",
+//                        "SellerSku" => "local-sku",
+//                        "color_family" => "Green",
+//                        "size" => "40",
+//                        "quantity" => "5",
+//                        "price" => "388",
+//                        "package_length" => "11",
+//                        "package_height" => "22",
+//                        "package_weight" => "33",
                         "package_width" => "44",
                         "package_content" => "this is what's in the box",
                         "Images" => [
@@ -189,6 +189,7 @@ class DarazApiService
             $apiName = "/product/create";
             $method = 'POST';
             $this->apiParams ['payload'] = $this->buildProductPayload($payload);
+            dd($this->apiParams ['payload']);
 //            $this->apiParams ['payload'] = $payload;
 
             return $this->darazService->execute($this->apiParams, $apiName, $method, $accessToken);
